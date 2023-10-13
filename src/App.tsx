@@ -80,7 +80,7 @@ function calculateResults(
         }
         results[0].push(balance)
     }
-    return [[0], [0]]
+    return results
 }
 
 function convertToTable(results: [[number], [number]]): [{
