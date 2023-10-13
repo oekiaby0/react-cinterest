@@ -238,7 +238,10 @@ function ResultsTableView({contributionPeriod, results}: {
         balance: 0, interest: 0, cuInterest: 0, deposits: 0, totalDeposits: 0
     }])
 
+    const [rowUnit, setRowUnit] = useState("Year")
+
     useEffect(() => {
+        setRowUnit(periodToUnit(contributionPeriod))
         setRows(convertToTable(results))
     }, [results])
 
@@ -247,7 +250,7 @@ function ResultsTableView({contributionPeriod, results}: {
             <Table sx={{minWidth: 650}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>{periodToUnit(contributionPeriod)}</TableCell>
+                        <TableCell>{rowUnit}</TableCell>
                         <TableCell align="left">Deposits</TableCell>
                         <TableCell align="left">Interest</TableCell>
                         <TableCell align="left">Total Deposits</TableCell>
