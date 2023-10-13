@@ -37,6 +37,6 @@ Contributions are welcome. Please follow the standard GitHub workflow for contri
 
 ## License
 
-This project is licensed under the GPT3 License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL3 License. See the [LICENSE](LICENSE) file for details.
 
 Feel free to adapt the above code for your project's specific needs.
