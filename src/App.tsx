@@ -88,13 +88,13 @@ function App() {
     }
 
     return (
-        <div className="App" style={{background: 'linear-gradient(to bottom, #f6d365, #fda085)', minHeight: '100vh'}}>
-            <Container maxWidth="md" style={{minHeight: '100vh', paddingTop: '20px', paddingBottom: '20px'}}>
-                <Paper elevation={3} sx={{p: 4, mb: 4, backgroundColor: '#ffffff', borderRadius: '12px'}}>
-                    <Typography data-testid="calculator-title" variant="h4" gutterBottom sx={{mb: 2, color: '#333333'}}>
+        <div className="App">
+            <Container maxWidth="md" className="container">
+                <Paper elevation={3} className="paper">
+                    <Typography data-testid="calculator-title" variant="h4" gutterBottom className="title">
                         Compound Interest Calculator
                     </Typography>
-                    <Typography variant="body1" sx={{color: '#666666'}}>
+                    <Typography variant="body1" className="body-text">
                         Estimate the future value of your investments with our compound interest calculator.
                         This tool helps you understand how your money can grow over time through the power
                         of compounding. Simply input your principal, interest rate, contribution, and other
@@ -103,7 +103,7 @@ function App() {
                 </Paper>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
-                        <Paper elevation={3} sx={{p: 3, borderRadius: '12px', backgroundColor: '#ffffff'}}>
+                        <Paper elevation={3} className="parameter-paper">
                             <ParameterSelectionView
                                 principal={principal}
                                 setPrincipal={setPrincipal}
@@ -125,12 +125,12 @@ function App() {
                         <ResultsStatisticsView results={results}/>
                     </Grid>
                 </Grid>
-                <Paper elevation={3} sx={{p: 3, mt: 3, borderRadius: '12px', backgroundColor: '#ffffff'}}>
+                <Paper elevation={3} className="results-paper">
                     <ResultsTableView contributionPeriod={contributionPeriod} results={results}/>
                 </Paper>
             </Container>
         </div>
-    )
+    );
 }
 
 export default App;
