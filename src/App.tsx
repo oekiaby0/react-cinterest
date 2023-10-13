@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {
     Button,
@@ -17,12 +17,81 @@ enum PERIOD {
     DAILY
 }
 
-function calculateTotal(principal: number, contribution: number, interest: number, n: number): number {
-    let total = principal
-    for (let x = 0; x < n; x++) {
-        total = (total + contribution) * interest
+function periodToUnit(p: PERIOD) {
+    let unit
+    switch (p) {
+        case PERIOD.ANNUALLY: unit = "Year"; break;
+        case PERIOD.QUARTERLY: unit = "Quarter"; break;
+        case PERIOD.MONTHLY: unit = "Month"; break;
+        case PERIOD.WEEKLY: unit = "Week"; break;
+        case PERIOD.DAILY: unit = "Day"; break;
+        default: unit="Unknown unit"
     }
-    return total
+    return unit
+}
+
+function periodToDays(p: PERIOD) {
+    let days
+    switch (p) {
+        case PERIOD.ANNUALLY: days = 365; break;
+        case PERIOD.QUARTERLY: days = 365/4; break;
+        case PERIOD.MONTHLY: days = 365/12; break;
+        case PERIOD.WEEKLY: days = 7; break;
+        case PERIOD.DAILY: days = 1; break;
+    }
+    return days
+}
+
+function calculateResults(
+    principal: number,
+    interestRate: number, interestRatePeriod: PERIOD,
+    contribution: number, contributionPeriod: PERIOD,
+    years: number, compoundPeriod: PERIOD
+): [[number], [number]] {
+    let interestRateDays = periodToDays(interestRatePeriod)
+    let compoundPeriodDays = periodToDays(compoundPeriod)
+    let contributionDays = periodToDays(contributionPeriod)
+    let smallestPeriodDays = Math.min(compoundPeriodDays, contributionDays)
+    let convertedRate = Math.pow(1 + interestRate/100, smallestPeriodDays/interestRateDays)
+    let compoundSmaller = compoundPeriodDays < contributionDays
+    let lastC = 0
+    let results: [[number], [number]] = [[0], [0]]
+    for (let n= 1; n < years * 365/smallestPeriodDays + 1; n++) {
+        let balance = results[0][n-1]
+        if (compoundPeriod === contributionPeriod) {
+            balance += contribution
+            balance *= convertedRate
+        } else if (compoundSmaller) {
+            balance += contribution
+            results[1].push(contribution)
+            if (n * smallestPeriodDays > lastC + compoundPeriodDays) {
+                lastC = n * smallestPeriodDays
+                balance *= convertedRate
+            }
+        } else {
+            if (n * smallestPeriodDays > lastC + contributionDays) {
+                lastC = n * smallestPeriodDays
+                balance += contribution
+                results[1].push(contribution)
+            } else {
+                results[1].push(0)
+            }
+            balance *= convertedRate
+        }
+        results[0].push(balance)
+    }
+    return [[0], [0]]
+}
+
+function convertToTable(results: [[number], [number]]): [{
+    balance: number,
+    interest: number,
+    cuInterest: number,
+    deposits: number,
+    totalDeposits: number
+}] {
+
+    return [{balance: 0, interest: 0, cuInterest: 0, deposits: 0, totalDeposits: 0}]
 }
 
 function ParametersSection({
@@ -32,6 +101,7 @@ function ParametersSection({
                                contribution, setContribution,
                                contributionPeriod, setContributionPeriod,
                                yearsCount, setYearsCount,
+                               compoundPeriod, setCompoundPeriod,
                                handleCalculate
                            }: {
                                principal: string, setPrincipal: (p: string) => void,
@@ -40,6 +110,7 @@ function ParametersSection({
                                contribution: string, setContribution: (contribution: string) => void,
                                contributionPeriod: PERIOD, setContributionPeriod: (period: PERIOD) => void,
                                yearsCount: string, setYearsCount: (years: string) => void,
+                               compoundPeriod: PERIOD, setCompoundPeriod: (period: PERIOD) => void
                                handleCalculate: (e: any) => void
                            }
 ) {
@@ -117,15 +188,30 @@ function ParametersSection({
                     </Select>
                 </FormControl>
             </div>
-            <TextField
-                label="Number of Years"
-                id="years-input"
-                sx={{m: 1, width: '15ch'}}
-                variant="filled"
-                size="small"
-                value={yearsCount}
-                onChange={e => setYearsCount(e.target.value)}
-            />
+            <div>
+                <TextField
+                    label="Number of Years"
+                    id="years-input"
+                    sx={{width: '15ch'}}
+                    variant="filled"
+                    size="small"
+                    value={yearsCount}
+                    onChange={e => setYearsCount(e.target.value)}
+                />
+                <FormControl sx={{m: 1, width: '12ch'}}>
+                    <Select
+                        value={compoundPeriod}
+                        onChange={e => setCompoundPeriod(e.target.value as PERIOD)}
+                        size="small"
+                    >
+                        <MenuItem value={PERIOD.ANNUALLY}>Annually</MenuItem>
+                        <MenuItem value={PERIOD.QUARTERLY}>Quarterly</MenuItem>
+                        <MenuItem value={PERIOD.MONTHLY}>Monthly</MenuItem>
+                        <MenuItem value={PERIOD.WEEKLY}>Weekly</MenuItem>
+                        <MenuItem value={PERIOD.DAILY}>Daily</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
             <Button variant="contained" size="medium"
                     onClick={handleCalculate}
             >
@@ -135,16 +221,24 @@ function ParametersSection({
     );
 }
 
-function ResultsView({results}: { results: [[number], [number]] }) {
-    let rows: [{ balance: number, interest: number, cuInterest: number, deposits: number, totalDeposits: number }] = [
-        {balance: 0, interest: 0, cuInterest: 0, deposits: 0, totalDeposits: 0}
-    ]
+function ResultsView({compoundPeriod, results}: {
+    compoundPeriod: PERIOD,
+    results: [[number], [number]]
+}) {
+    const [rows, setRows] = useState([{
+        balance: 0, interest: 0, cuInterest: 0, deposits: 0, totalDeposits: 0
+    }])
+
+    useEffect(() => {
+        setRows(convertToTable(results))
+    }, [results])
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 650}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Year</TableCell>
+                        <TableCell>{periodToUnit(compoundPeriod)}</TableCell>
                         <TableCell align="left">Deposits</TableCell>
                         <TableCell align="left">Interest</TableCell>
                         <TableCell align="left">Total Deposits</TableCell>
@@ -173,12 +267,13 @@ function ResultsView({results}: { results: [[number], [number]] }) {
 }
 
 function App() {
-    const [principal, setPrincipal] = useState('')
-    const [interestRate, setInterestRate] = useState('')
+    const [principal, setPrincipal] = useState('0')
+    const [interestRate, setInterestRate] = useState('0')
     const [interestRatePeriod, setInterestRatePeriod] = useState(PERIOD.ANNUALLY)
-    const [contribution, setContribution] = useState('')
+    const [contribution, setContribution] = useState('0')
     const [contributionPeriod, setContributionPeriod] = useState(PERIOD.ANNUALLY)
-    const [yearsCount, setYearsCount] = useState('')
+    const [yearsCount, setYearsCount] = useState('0')
+    const [compoundPeriod, setCompoundPeriod] = useState(PERIOD.ANNUALLY)
     const [results, setResults] = useState([[0], [0]])
 
     function handleCalculate(e: any): void {
@@ -201,9 +296,11 @@ function App() {
                     setContributionPeriod={setContributionPeriod}
                     yearsCount={yearsCount}
                     setYearsCount={setYearsCount}
+                    compoundPeriod={compoundPeriod}
+                    setCompoundPeriod={setCompoundPeriod}
                     handleCalculate={handleCalculate}
                 />
-                <ResultsView results={results as [[number], [number]]}/>
+                <ResultsView compoundPeriod={compoundPeriod} results={results as [[number], [number]]}/>
             </Stack>
         </Container>
     </div>
