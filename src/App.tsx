@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {
     Button,
@@ -73,10 +73,6 @@ function periodToDays(p: PERIOD): number {
             break;
     }
     return days
-}
-
-function smallestPeriod(a: PERIOD, b: PERIOD) {
-    return a < b ? a : b
 }
 
 function calculateResults(
@@ -263,7 +259,6 @@ function ResultsStatisticsView({results}: {
     };
 
     const futureInvestmentValue = results[results.length - 1].balance;
-    const timeWeightedRateOfReturn = ((futureInvestmentValue - results[0].totalDeposits) / results[0].totalDeposits) * 100;
     const totalInterestRate = (results[results.length-1].balance/results[results.length-1].totalDeposits - 1)*100
 
     return (
