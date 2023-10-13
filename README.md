@@ -2,6 +2,8 @@
 
 A simple compound interest calculator web application built using React and TypeScript. This tool helps users estimate the future value of their investments over time.
 
+![Screenshot](screenshot.png)
+
 ## Features
 
 - User-friendly interface for easy input of financial parameters.
