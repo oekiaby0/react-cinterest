@@ -2,6 +2,8 @@
 
 A simple compound interest calculator web application built using React and TypeScript. This tool helps users estimate the future value of their investments over time.
 
+[Live Demo](https://oekiaby0.github.io/react-cinterest/)
+
 ![Screenshot](screenshot.png)
 
 ## Features
