@@ -38,7 +38,7 @@ export function ParameterSelectionView({
                 label="Initial investment"
                 id="principal-input"
                 name="principal-input"
-                sx={{m: 1, width: '15ch'}}
+                sx={{m: 1, width: '20ch'}}
                 InputProps={{
                     startAdornment: <InputAdornment position="start">$</InputAdornment>,
                 }}
@@ -52,7 +52,7 @@ export function ParameterSelectionView({
                     label="Interest rate"
                     id="interest-rate-input"
                     name="interest-rate-input"
-                    sx={{width: '15ch'}}
+                    sx={{width: '20ch'}}
                     InputProps={{
                         endAdornment: <InputAdornment position="end">%</InputAdornment>,
                     }}
@@ -80,7 +80,7 @@ export function ParameterSelectionView({
                     label="Periodic Contribution"
                     id="contribution-input"
                     name="contribution-input"
-                    sx={{width: '15ch'}}
+                    sx={{width: '20ch'}}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">$</InputAdornment>,
                     }}
@@ -107,7 +107,7 @@ export function ParameterSelectionView({
                 label="Number of Years"
                 id="years-input"
                 name="years-input"
-                sx={{m: 1, width: '15ch'}}
+                sx={{m: 1, width: '20ch'}}
                 variant="filled"
                 size="small"
                 value={yearsCount}
