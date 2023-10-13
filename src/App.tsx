@@ -21,7 +21,6 @@ export function calculateResults(
     let interestRateDays = periodToDays(interestRatePeriod)
     let contributionDays = periodToDays(contributionPeriod)
     let convertedRate = Math.pow(1 + interestRate / 100, (contributionDays / interestRateDays))
-    console.log(convertedRate)
     let results: [[number], [number]] = [[principal], [principal]]
     for (let n = 1; n < years * 365 / contributionDays + 1; n++) {
         let balance = results[0][n - 1]
