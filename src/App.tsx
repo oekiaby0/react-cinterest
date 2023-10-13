@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 enum PERIOD {
-    YEARLY,
+    ANNUALLY,
     QUARTERLY,
     MONTHLY,
     WEEKLY,
@@ -26,15 +26,19 @@ function calculateTotal(principal: number, contribution: number, interest: numbe
 }
 
 function ParametersSection({
-                               interestRatePeriod, setInterestRatePeriod,
                                principal, setPrincipal,
                                interestRate, setInterestRate,
+                               interestRatePeriod, setInterestRatePeriod,
+                               contribution, setContribution,
+                               contributionPeriod, setContributionPeriod,
                                yearsCount, setYearsCount,
                                handleCalculate
                            }: {
-                               interestRatePeriod: PERIOD, setInterestRatePeriod: (period: PERIOD) => void,
                                principal: string, setPrincipal: (p: string) => void,
                                interestRate: string, setInterestRate: (rate: string) => void,
+                               interestRatePeriod: PERIOD, setInterestRatePeriod: (period: PERIOD) => void,
+                               contribution: string, setContribution: (contribution: string) => void,
+                               contributionPeriod: PERIOD, setContributionPeriod: (period: PERIOD) => void,
                                yearsCount: string, setYearsCount: (years: string) => void,
                                handleCalculate: (e: any) => void
                            }
@@ -78,7 +82,34 @@ function ParametersSection({
                         onChange={e => setInterestRatePeriod(e.target.value as PERIOD)}
                         size="small"
                     >
-                        <MenuItem value={PERIOD.YEARLY}>Yearly</MenuItem>
+                        <MenuItem value={PERIOD.ANNUALLY}>Annually</MenuItem>
+                        <MenuItem value={PERIOD.QUARTERLY}>Quarterly</MenuItem>
+                        <MenuItem value={PERIOD.MONTHLY}>Monthly</MenuItem>
+                        <MenuItem value={PERIOD.WEEKLY}>Weekly</MenuItem>
+                        <MenuItem value={PERIOD.DAILY}>Daily</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
+            <div>
+                <TextField
+                    label="Periodic Contribution"
+                    id="contribution-input"
+                    sx={{width: '15ch'}}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    }}
+                    variant="filled"
+                    size="small"
+                    value={contribution}
+                    onChange={e => setContribution(e.target.value)}
+                />
+                <FormControl sx={{m: 1, width: '12ch'}}>
+                    <Select
+                        value={contributionPeriod}
+                        onChange={e => setContributionPeriod(e.target.value as PERIOD)}
+                        size="small"
+                    >
+                        <MenuItem value={PERIOD.ANNUALLY}>Annually</MenuItem>
                         <MenuItem value={PERIOD.QUARTERLY}>Quarterly</MenuItem>
                         <MenuItem value={PERIOD.MONTHLY}>Monthly</MenuItem>
                         <MenuItem value={PERIOD.WEEKLY}>Weekly</MenuItem>
@@ -105,8 +136,8 @@ function ParametersSection({
 }
 
 function ResultsView({results}: { results: [[number], [number]] }) {
-    let rows : [{balance: number, interest: number, cuInterest: number}] = [
-        {balance: 0, interest: 0, cuInterest: 0}
+    let rows: [{ balance: number, interest: number, cuInterest: number, deposits: number, totalDeposits: number }] = [
+        {balance: 0, interest: 0, cuInterest: 0, deposits: 0, totalDeposits: 0}
     ]
     return (
         <TableContainer component={Paper}>
@@ -114,9 +145,11 @@ function ResultsView({results}: { results: [[number], [number]] }) {
                 <TableHead>
                     <TableRow>
                         <TableCell>Year</TableCell>
-                        <TableCell align="left">Balance</TableCell>
+                        <TableCell align="left">Deposits</TableCell>
                         <TableCell align="left">Interest</TableCell>
+                        <TableCell align="left">Total Deposits</TableCell>
                         <TableCell align="left">Cumulative Interest</TableCell>
+                        <TableCell align="left">Balance</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -126,9 +159,11 @@ function ResultsView({results}: { results: [[number], [number]] }) {
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
                             <TableCell align="left">{index}</TableCell>
-                            <TableCell align="left">{row.balance}</TableCell>
+                            <TableCell align="left">{row.deposits}</TableCell>
                             <TableCell align="left">{row.interest}</TableCell>
+                            <TableCell align="left">{row.totalDeposits}</TableCell>
                             <TableCell align="left">{row.cuInterest}</TableCell>
+                            <TableCell align="left">{row.balance}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -138,11 +173,12 @@ function ResultsView({results}: { results: [[number], [number]] }) {
 }
 
 function App() {
-    const [interestRatePeriod, setInterestRatePeriod] = useState(PERIOD.YEARLY)
     const [principal, setPrincipal] = useState('')
     const [interestRate, setInterestRate] = useState('')
+    const [interestRatePeriod, setInterestRatePeriod] = useState(PERIOD.ANNUALLY)
+    const [contribution, setContribution] = useState('')
+    const [contributionPeriod, setContributionPeriod] = useState(PERIOD.ANNUALLY)
     const [yearsCount, setYearsCount] = useState('')
-
     const [results, setResults] = useState([[0], [0]])
 
     function handleCalculate(e: any): void {
@@ -153,12 +189,16 @@ function App() {
         <Container>
             <Stack>
                 <ParametersSection
-                    interestRatePeriod={interestRatePeriod}
-                    setInterestRatePeriod={setInterestRatePeriod}
                     principal={principal}
                     setPrincipal={setPrincipal}
                     interestRate={interestRate}
                     setInterestRate={setInterestRate}
+                    interestRatePeriod={interestRatePeriod}
+                    setInterestRatePeriod={setInterestRatePeriod}
+                    contribution={contribution}
+                    setContribution={setContribution}
+                    contributionPeriod={contributionPeriod}
+                    setContributionPeriod={setContributionPeriod}
                     yearsCount={yearsCount}
                     setYearsCount={setYearsCount}
                     handleCalculate={handleCalculate}
