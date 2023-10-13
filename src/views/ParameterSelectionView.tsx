@@ -3,28 +3,28 @@ import {Button, FormControl, InputAdornment, MenuItem, Select, Stack, TextField}
 import React from "react";
 
 export function ParameterSelectionView({
-                                    principal, setPrincipal,
-                                    interestRate, setInterestRate,
-                                    interestRatePeriod, setInterestRatePeriod,
-                                    contribution, setContribution,
-                                    contributionPeriod, setContributionPeriod,
-                                    yearsCount, setYearsCount,
-                                    handleCalculate
-                                }: {
-                                    principal: string,
-                                    setPrincipal: (p: string) => void,
-                                    interestRate: string,
-                                    setInterestRate: (rate: string) => void,
-                                    interestRatePeriod: PERIOD,
-                                    setInterestRatePeriod: (period: PERIOD) => void,
-                                    contribution: string,
-                                    setContribution: (contribution: string) => void,
-                                    contributionPeriod: PERIOD,
-                                    setContributionPeriod: (period: PERIOD) => void,
-                                    yearsCount: string,
-                                    setYearsCount: (years: string) => void,
-                                    handleCalculate: (e: any) => void
-                                }
+                                           principal, setPrincipal,
+                                           interestRate, setInterestRate,
+                                           interestRatePeriod, setInterestRatePeriod,
+                                           contribution, setContribution,
+                                           contributionPeriod, setContributionPeriod,
+                                           yearsCount, setYearsCount,
+                                           handleCalculate
+                                       }: {
+                                           principal: string,
+                                           setPrincipal: (p: string) => void,
+                                           interestRate: string,
+                                           setInterestRate: (rate: string) => void,
+                                           interestRatePeriod: PERIOD,
+                                           setInterestRatePeriod: (period: PERIOD) => void,
+                                           contribution: string,
+                                           setContribution: (contribution: string) => void,
+                                           contributionPeriod: PERIOD,
+                                           setContributionPeriod: (period: PERIOD) => void,
+                                           yearsCount: string,
+                                           setYearsCount: (years: string) => void,
+                                           handleCalculate: (e: any) => void
+                                       }
 ) {
     return (
         <Stack
