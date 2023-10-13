@@ -371,45 +371,49 @@ function App() {
     }
 
     return (
-        <div className="App" style={{ paddingTop: '20px' }}>
-            <Container>
-                <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
-                    <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
+        <div className="App" style={{ background: 'linear-gradient(to bottom, #f6d365, #fda085)', minHeight: '100vh' }}>
+            <Container maxWidth="md" style={{ minHeight: '100vh', paddingTop: '20px', paddingBottom: '20px' }}>
+                <Paper elevation={3} sx={{ p: 4, mb: 4, backgroundColor: '#ffffff', borderRadius: '12px' }}>
+                    <Typography variant="h4" gutterBottom sx={{ mb: 2, color: '#333333' }}>
                         Compound Interest Calculator
                     </Typography>
-                    <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                    <Typography variant="body1" sx={{ color: '#666666' }}>
                         Estimate the future value of your investments with our compound interest calculator.
                         This tool helps you understand how your money can grow over time through the power
                         of compounding. Simply input your principal, interest rate, contribution, and other
                         details to get started.
                     </Typography>
                 </Paper>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                        <ParametersSection
-                            principal={principal}
-                            setPrincipal={setPrincipal}
-                            interestRate={interestRate}
-                            setInterestRate={setInterestRate}
-                            interestRatePeriod={interestRatePeriod}
-                            setInterestRatePeriod={setInterestRatePeriod}
-                            contribution={contribution}
-                            setContribution={setContribution}
-                            contributionPeriod={contributionPeriod}
-                            setContributionPeriod={setContributionPeriod}
-                            yearsCount={yearsCount}
-                            setYearsCount={setYearsCount}
-                            handleCalculate={handleCalculate}
-                        />
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                        <Paper elevation={3} sx={{ p: 3, borderRadius: '12px', backgroundColor: '#ffffff' }}>
+                            <ParametersSection
+                                principal={principal}
+                                setPrincipal={setPrincipal}
+                                interestRate={interestRate}
+                                setInterestRate={setInterestRate}
+                                interestRatePeriod={interestRatePeriod}
+                                setInterestRatePeriod={setInterestRatePeriod}
+                                contribution={contribution}
+                                setContribution={setContribution}
+                                contributionPeriod={contributionPeriod}
+                                setContributionPeriod={setContributionPeriod}
+                                yearsCount={yearsCount}
+                                setYearsCount={setYearsCount}
+                                handleCalculate={handleCalculate}
+                            />
+                        </Paper>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <ResultsStatisticsView results={results} />
                     </Grid>
                 </Grid>
-                <ResultsTableView contributionPeriod={contributionPeriod} results={results} />
+                <Paper elevation={3} sx={{ p: 3, mt: 3, borderRadius: '12px', backgroundColor: '#ffffff' }}>
+                    <ResultsTableView contributionPeriod={contributionPeriod} results={results} />
+                </Paper>
             </Container>
         </div>
-    );
+    )
 }
 
 export default App;
