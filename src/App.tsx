@@ -72,7 +72,7 @@ function App() {
         balance: 0, interest: 0, cuInterest: 0, deposits: 0, totalDeposits: 0
     }])
 
-    function handleCalculate(e: any): void {
+    function handleCalculate(_: any): void {
         let principalInt = parseInt(principal)
         let interestRateInt = parseInt(interestRate)
         let contributionInt = parseInt(contribution)
