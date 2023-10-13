@@ -37,6 +37,7 @@ export function ParameterSelectionView({
             <TextField
                 label="Initial investment"
                 id="principal-input"
+                name="principal-input"
                 sx={{m: 1, width: '15ch'}}
                 InputProps={{
                     startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -49,7 +50,8 @@ export function ParameterSelectionView({
             <div>
                 <TextField
                     label="Interest rate"
-                    id="interest-input"
+                    id="interest-rate-input"
+                    name="interest-rate-input"
                     sx={{width: '15ch'}}
                     InputProps={{
                         endAdornment: <InputAdornment position="end">%</InputAdornment>,
@@ -77,6 +79,7 @@ export function ParameterSelectionView({
                 <TextField
                     label="Periodic Contribution"
                     id="contribution-input"
+                    name="contribution-input"
                     sx={{width: '15ch'}}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -103,6 +106,7 @@ export function ParameterSelectionView({
             <TextField
                 label="Number of Years"
                 id="years-input"
+                name="years-input"
                 sx={{m: 1, width: '15ch'}}
                 variant="filled"
                 size="small"

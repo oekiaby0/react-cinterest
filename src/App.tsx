@@ -12,7 +12,7 @@ import ResultsStatisticsView from "./views/ResultsStatisticsView";
 import {PERIOD, periodToDays} from "./utilities"
 import ParameterSelectionView from "./views/ParameterSelectionView";
 
-function calculateResults(
+export function calculateResults(
     principal: number,
     interestRate: number, interestRatePeriod: PERIOD,
     contribution: number, contributionPeriod: PERIOD,
@@ -33,7 +33,7 @@ function calculateResults(
     return results
 }
 
-function convertToTable(results: [[number], [number]]): {
+export function convertToTable(results: [[number], [number]]): {
     balance: number,
     interest: number,
     cuInterest: number,
@@ -91,7 +91,7 @@ function App() {
         <div className="App" style={{background: 'linear-gradient(to bottom, #f6d365, #fda085)', minHeight: '100vh'}}>
             <Container maxWidth="md" style={{minHeight: '100vh', paddingTop: '20px', paddingBottom: '20px'}}>
                 <Paper elevation={3} sx={{p: 4, mb: 4, backgroundColor: '#ffffff', borderRadius: '12px'}}>
-                    <Typography variant="h4" gutterBottom sx={{mb: 2, color: '#333333'}}>
+                    <Typography data-testid="calculator-title" variant="h4" gutterBottom sx={{mb: 2, color: '#333333'}}>
                         Compound Interest Calculator
                     </Typography>
                     <Typography variant="body1" sx={{color: '#666666'}}>
