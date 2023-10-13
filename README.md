@@ -10,7 +10,7 @@ A simple compound interest calculator web application built using React and Type
 
 ## Installation
 
-1. Clone the repository: `https://github.com/oekiaby0/react-cinterest.git`
+1. Clone the repository: `git clone https://github.com/oekiaby0/react-cinterest.git`
 2. Navigate to the project directory: `cd react-cinterest`
 3. Install dependencies: `npm install`
 4. Run the development server: `npm start`
