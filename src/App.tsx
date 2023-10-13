@@ -73,12 +73,12 @@ function App() {
     }])
 
     function handleCalculate(e: any): void {
-        let principialInt = parseInt(principal)
+        let principalInt = parseInt(principal)
         let interestRateInt = parseInt(interestRate)
         let contributionInt = parseInt(contribution)
         let yearsInt = parseInt(yearsCount)
         setResults(convertToTable(calculateResults(
-            principialInt,
+            principalInt,
             interestRateInt,
             interestRatePeriod,
             contributionInt,
