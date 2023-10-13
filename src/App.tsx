@@ -150,9 +150,6 @@ function App() {
     }
 
     return <div className="App">
-        <header>
-            <meta name="viewport" content="initial-scale=1, width=device-width"/>
-        </header>
         <Container>
             <Stack>
                 <ParametersSection
