@@ -259,7 +259,7 @@ function ResultsStatisticsView({results}: {
     };
 
     const futureInvestmentValue = results[results.length - 1].balance;
-    const totalInterestRate = (results[results.length-1].balance/results[results.length-1].totalDeposits - 1)*100
+    const totalInterestRate = (results[results.length - 1].balance / results[results.length - 1].totalDeposits - 1) * 100
 
     return (
         <Paper style={{padding: '20px', marginBottom: '20px'}}>
@@ -289,12 +289,14 @@ function ResultsStatisticsView({results}: {
             <Box display="flex" justifyContent="space-between" marginTop="20px">
                 <Box>
                     <Typography variant="subtitle1">Additional deposits</Typography>
-                    <Typography variant="h6">{formatCurrency(results[results.length -1].totalDeposits - results[0].deposits)}</Typography>
+                    <Typography
+                        variant="h6">{formatCurrency(results[results.length - 1].totalDeposits - results[0].deposits)}</Typography>
                 </Box>
 
                 <Box>
                     <Typography variant="subtitle1">Total rate of return</Typography>
-                    <Typography variant="h6"  style={{color: '#2196F3'}}>{formatPercentage(totalInterestRate)}</Typography>
+                    <Typography variant="h6"
+                                style={{color: '#2196F3'}}>{formatPercentage(totalInterestRate)}</Typography>
                 </Box>
             </Box>
         </Paper>
@@ -371,13 +373,13 @@ function App() {
     }
 
     return (
-        <div className="App" style={{ background: 'linear-gradient(to bottom, #f6d365, #fda085)', minHeight: '100vh' }}>
-            <Container maxWidth="md" style={{ minHeight: '100vh', paddingTop: '20px', paddingBottom: '20px' }}>
-                <Paper elevation={3} sx={{ p: 4, mb: 4, backgroundColor: '#ffffff', borderRadius: '12px' }}>
-                    <Typography variant="h4" gutterBottom sx={{ mb: 2, color: '#333333' }}>
+        <div className="App" style={{background: 'linear-gradient(to bottom, #f6d365, #fda085)', minHeight: '100vh'}}>
+            <Container maxWidth="md" style={{minHeight: '100vh', paddingTop: '20px', paddingBottom: '20px'}}>
+                <Paper elevation={3} sx={{p: 4, mb: 4, backgroundColor: '#ffffff', borderRadius: '12px'}}>
+                    <Typography variant="h4" gutterBottom sx={{mb: 2, color: '#333333'}}>
                         Compound Interest Calculator
                     </Typography>
-                    <Typography variant="body1" sx={{ color: '#666666' }}>
+                    <Typography variant="body1" sx={{color: '#666666'}}>
                         Estimate the future value of your investments with our compound interest calculator.
                         This tool helps you understand how your money can grow over time through the power
                         of compounding. Simply input your principal, interest rate, contribution, and other
@@ -386,7 +388,7 @@ function App() {
                 </Paper>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
-                        <Paper elevation={3} sx={{ p: 3, borderRadius: '12px', backgroundColor: '#ffffff' }}>
+                        <Paper elevation={3} sx={{p: 3, borderRadius: '12px', backgroundColor: '#ffffff'}}>
                             <ParametersSection
                                 principal={principal}
                                 setPrincipal={setPrincipal}
@@ -405,11 +407,11 @@ function App() {
                         </Paper>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <ResultsStatisticsView results={results} />
+                        <ResultsStatisticsView results={results}/>
                     </Grid>
                 </Grid>
-                <Paper elevation={3} sx={{ p: 3, mt: 3, borderRadius: '12px', backgroundColor: '#ffffff' }}>
-                    <ResultsTableView contributionPeriod={contributionPeriod} results={results} />
+                <Paper elevation={3} sx={{p: 3, mt: 3, borderRadius: '12px', backgroundColor: '#ffffff'}}>
+                    <ResultsTableView contributionPeriod={contributionPeriod} results={results}/>
                 </Paper>
             </Container>
         </div>
